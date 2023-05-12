@@ -9,6 +9,8 @@ module.exports.startUp = async (client) => {
 
 	await dbCmds.resetSummValue("countUniquePlayers")
 	await dbCmds.resetSummValue("countTicketsSold")
+	await dbCmds.resetSummValue("d8Profit")
+	await dbCmds.resetSummValue("d8Cost")
 
 	try {
 		await channel.messages.fetch(oldEmbed);
