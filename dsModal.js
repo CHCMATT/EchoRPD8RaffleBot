@@ -35,7 +35,7 @@ module.exports.modalSubmit = async (interaction) => {
 				var numTickets = Math.abs(Number(strCleanup(interaction.fields.getTextInputValue('ticketQuantityInput'))));
 
 				await interaction.client.googleSheets.values.append({
-					auth: interaction.client.sheetsAuth, spreadsheetId: process.env.BACKUP_DATA_SHEET_ID, range: "Bennys Sunrise Raffle!A:G", valueInputOption: "RAW", resource: { values: [[`Add`, `${salespersonName} (<@${interaction.user.id}>)`, saleDate, buyerName, citizenId, phoneNumber, numTickets]] }
+					auth: interaction.client.sheetsAuth, spreadsheetId: process.env.BACKUP_DATA_SHEET_ID, range: "Lighthouse House Raffle!A:G", valueInputOption: "RAW", resource: { values: [[`Add`, `${salespersonName} (<@${interaction.user.id}>)`, saleDate, buyerName, citizenId, phoneNumber, numTickets]] }
 				});
 
 				if (isNaN(numTickets)) { // validate quantity of tickets
@@ -91,7 +91,7 @@ module.exports.modalSubmit = async (interaction) => {
 					.setColor('1EC276');
 				await interaction.client.channels.cache.get(process.env.COMMISSION_LOGS_CHANNEL_ID).send({ embeds: [notificationEmbed] });
 
-				await interaction.reply({ content: `Successfully added \`${numTickets}\` tickets for \`${buyerName}\` to the \`Benny's Sunrise\` raffle.\n\nDetails about this sale:\n> Individual Ticket Price: \`${formattedIndivTicketPrice}\`\n> Total Sale Price: \`${formattedThisSalePrice}\`\n> Your Commission: \`${formattedSalespersonCommission}\`\n\nYour overall commission is now: \`${totalCommission}\`.`, ephemeral: true });
+				await interaction.reply({ content: `Successfully added \`${numTickets}\` tickets for \`${buyerName}\` to the \`Lighthouse House\` raffle.\n\nDetails about this sale:\n> Individual Ticket Price: \`${formattedIndivTicketPrice}\`\n> Total Sale Price: \`${formattedThisSalePrice}\`\n> Your Commission: \`${formattedSalespersonCommission}\`\n\nYour overall commission is now: \`${totalCommission}\`.`, ephemeral: true });
 				break;
 			case 'removeTicketsModal':
 				var salespersonName;
@@ -109,7 +109,7 @@ module.exports.modalSubmit = async (interaction) => {
 				var numTickets = Math.abs(Number(strCleanup(interaction.fields.getTextInputValue('ticketQuantityInput'))));
 
 				await interaction.client.googleSheets.values.append({
-					auth: interaction.client.sheetsAuth, spreadsheetId: process.env.BACKUP_DATA_SHEET_ID, range: "Bennys Sunrise Raffle!A:G", valueInputOption: "RAW", resource: { values: [[`Remove`, `${salespersonName} (<@${interaction.user.id}>)`, removalDate, buyerName, citizenId, ``, numTickets]] }
+					auth: interaction.client.sheetsAuth, spreadsheetId: process.env.BACKUP_DATA_SHEET_ID, range: "Lighthouse House Raffle!A:G", valueInputOption: "RAW", resource: { values: [[`Remove`, `${salespersonName} (<@${interaction.user.id}>)`, removalDate, buyerName, citizenId, ``, numTickets]] }
 				});
 
 				if (isNaN(numTickets)) { // validate quantity of tickets
@@ -179,7 +179,7 @@ module.exports.modalSubmit = async (interaction) => {
 						.setColor('1EC276');
 					await interaction.client.channels.cache.get(process.env.COMMISSION_LOGS_CHANNEL_ID).send({ embeds: [notificationEmbed] });
 
-					await interaction.reply({ content: `Successfully removed \`${numTickets}\` tickets for \`${buyerName}\` from the \`Benny's Sunrise\` raffle.\n\nDetails about this sale:\n> Individual Ticket Price: \`-${formattedIndivTicketPrice}\`\n> Total Sale Price: \`-${formattedThisSalePrice}\`\n> Your Commission: \`-${formattedSalespersonCommission}\`\n\nYour overall commission is now: \`${totalCommission}\`.`, ephemeral: true });
+					await interaction.reply({ content: `Successfully removed \`${numTickets}\` tickets for \`${buyerName}\` from the \`Lighthouse House\` raffle.\n\nDetails about this sale:\n> Individual Ticket Price: \`-${formattedIndivTicketPrice}\`\n> Total Sale Price: \`-${formattedThisSalePrice}\`\n> Your Commission: \`-${formattedSalespersonCommission}\`\n\nYour overall commission is now: \`${totalCommission}\`.`, ephemeral: true });
 				}
 				break;
 			default:
