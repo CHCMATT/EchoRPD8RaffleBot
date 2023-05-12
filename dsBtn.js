@@ -3,6 +3,12 @@ let editEmbed = require('./editEmbed.js');
 var commissionCmds = require('./commissionCmds.js');
 let { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, PermissionsBitField, EmbedBuilder } = require('discord.js');
 
+let formatter = new Intl.NumberFormat('en-US', {
+	style: 'currency',
+	currency: 'USD',
+	maximumFractionDigits: 0
+});
+
 module.exports.btnPressed = async (interaction) => {
 	try {
 		var buttonID = interaction.customId;
@@ -105,10 +111,52 @@ module.exports.btnPressed = async (interaction) => {
 
 						await editEmbed.editEmbed(interaction.client, `disabled`);
 
+						let overallD8Profit = await dbCmds.readSummValue("d8Profit");
+						let overallD8Cost = await dbCmds.readSummValue("d8Cost");
+						let overallTicketsSold = await dbCmds.readSummValue("countTicketsSold");
+						let overallUniquePlayers = await dbCmds.readSummValue("countUniquePlayers");
+						let indivTicketPrice = 5000;
+						let indivCommission = 1000;
+						let totalOverallMoney = (overallTicketsSold * indivTicketPrice);
+						let totalCommission = (overallTicketsSold * indivCommission);
+
+						let formattedTotalOverallMoney = formatter.format(totalOverallMoney);
+						let formattedTotalCommission = formatter.format(totalCommission);
+
+						let formattedOverallD8Profit = formatter.format(overallD8Profit);
+						let formattedOverallD8Cost = formatter.format(overallD8Cost);
+
+						var upstairsEmbed1 = new EmbedBuilder()
+							.setTitle(`The \`Mount Gordo Lighthouse House\` Raffle was completed on ${dateTime}!`)
+							.addFields(
+								{ name: `Winner Name:`, value: `${winnerData.charName}`, inline: true },
+								{ name: `Citizen ID:`, value: `${winnerData.citizenId}`, inline: true },
+								{ name: `Phone Number:`, value: `${winnerData.phoneNum}`, inline: true },
+								{ name: `Amount of Tickets Purchase:`, value: `${winnerData.ticketsBought}` },
+								{ name: `Raffle Completed By:`, value: `<@${interaction.user.id}>` },
+							)
+							.setColor('EDC531');
+
+						var upstairsEmbed2 = new EmbedBuilder()
+							.setTitle(`The \`Mount Gordo Lighthouse House\` Raffle breakdown for Dynasty 8`)
+							.addFields(
+								{ name: `Total Tickets Sold:`, value: `${overallTicketsSold}`, inline: true },
+								{ name: `Unique Participants:`, value: `${overallUniquePlayers}`, inline: true },
+								{ name: `Total Money Accepted:`, value: `${formattedTotalOverallMoney}` },
+								{ name: `Total Commission Paid:`, value: `${formattedTotalCommission}`, inline: true },
+								{ name: `Dynasty 8 Profit:`, value: `${formattedOverallD8Profit}`, inline: true },
+								{ name: `Dynasty 8 House Cost:`, value: `${formattedOverallD8Cost}`, inline: true },
+							)
+							.setColor('FAD643');
+
+						await interaction.client.channels.cache.get(process.env.THE_UPSTAIRS_CHANNEL_ID).send({ embeds: [upstairsEmbed1, upstairsEmbed2] });
+
 						await dbCmds.resetSummValue("countTicketsSold");
 						await dbCmds.resetSummValue("countUniquePlayers");
+						await dbCmds.resetSummValue("d8Profit");
+						await dbCmds.resetSummValue("d8Cost");
 
-						// Theme Color Palette: https://coolors.co/palette/d9ed92-b5e48c-99d98c-76c893-52b69a-34a0a4-168aad-1a759f-1e6091-184e77
+						// Theme Color Palette: https://coolors.co/palette/ffe169-fad643-edc531-dbb42c-c9a227-b69121-a47e1b-926c15-805b10-76520e
 
 						var winnerEmbed = [new EmbedBuilder()
 							.setTitle(`A winner for the \`Mount Gordo Lighthouse House\` Raffle has been selected on ${dateTime}! :tada:`)
@@ -118,11 +166,13 @@ module.exports.btnPressed = async (interaction) => {
 								{ name: `Phone Number:`, value: `${winnerData.phoneNum}`, inline: true },
 								{ name: `Amount of Tickets Purchase:`, value: `${winnerData.ticketsBought}` },
 							)
-							.setColor('168AAD')];
+							.setColor('DBB42C')];
 
 						await interaction.client.channels.cache.get(process.env.EMBED_CHANNEL_ID).send({ embeds: winnerEmbed });
 
 						await commissionCmds.commissionReport(interaction.client);
+
+						await interaction.reply({ content: `Successfully ended the raffle!`, ephemeral: true });
 					} else {
 						await interaction.reply({ content: `:exclamation: There are no tickets sold yet for this raffle!`, ephemeral: true });
 					}

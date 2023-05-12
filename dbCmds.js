@@ -104,13 +104,17 @@ module.exports.resetCommission = async (discordId) => {
 	await salespersonStats.findOneAndUpdate({ discordId: discordId }, { currentCommission: 0 });
 };
 
+module.exports.resetTicketsSold = async (discordId) => {
+	await salespersonStats.findOneAndUpdate({ discordId: discordId }, { ticketsSold: 0 });
+};
+
 module.exports.readCommission = async (discordId) => {
 	let result = await salespersonStats.findOne({ discordId: discordId }, { currentCommission: 1, _id: 0 });
 	return result.currentCommission;
 };
 
 module.exports.commissionRep = async () => {
-	var result = await salespersonStats.find({ currentCommission: { $gt: 0 } }, { discordId: 1, charName: 1, currentCommission: 1, _id: 0 });
+	var result = await salespersonStats.find({ currentCommission: { $gt: 0 } }, { discordId: 1, charName: 1, currentCommission: 1, ticketsSold: 1, _id: 0 });
 	return result;
 };
 
