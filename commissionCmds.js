@@ -32,7 +32,7 @@ module.exports.commissionReport = async (client) => {
 
 	// color palette: https://coolors.co/palette/706677-7bc950-fffbfe-13262b-1ca3c4-b80600-1ec276-ffa630
 
-	var reason = `Commission Report triggered on ${today}`
+	var reason = `Raffle Ended and Commission Report triggered on ${today}`
 	var notificationEmbed = new EmbedBuilder()
 		.setTitle('Commission Modified Automatically:')
 		.setDescription(`\`System\` reset all raffle commissions to \`$0\`.\n\n**Reason:** ${reason}.`)
