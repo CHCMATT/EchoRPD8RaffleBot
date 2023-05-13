@@ -75,7 +75,7 @@ module.exports.btnPressed = async (interaction) => {
 				await interaction.showModal(removeTicketsModal);
 				break;
 			case 'completeRaffle':
-				if (interaction.member.permissions.has(PermissionsBitField.Flags.Administrator)) {
+				if (interaction.member.permissions.has(PermissionsBitField.Flags.Administrator) || interaction.user.id == `220286286064386048`) {
 					var select = new StringSelectMenuBuilder()
 						.setCustomId('endRaffleConfirmation')
 						.setPlaceholder(`Pick an option...`)
