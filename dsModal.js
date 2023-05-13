@@ -64,7 +64,7 @@ module.exports.modalSubmit = async (interaction) => {
 				var indivTicketPrice = 5000;
 				var thisSalePrice = (numTickets * indivTicketPrice);
 				var thisSaleD8Profit = (numTickets * 2000);
-				var thisSaleD8Profit = (numTickets * 2000);
+				var thisSaleD8Cost = (numTickets * 2000);
 				var salespersonCommission = (numTickets * 1000);
 
 				await dbCmds.addSummValue("d8Profit", thisSaleD8Profit);
@@ -73,7 +73,7 @@ module.exports.modalSubmit = async (interaction) => {
 				var formattedIndivTicketPrice = formatter.format(indivTicketPrice);
 				var formattedThisSalePrice = formatter.format(thisSalePrice);
 				var formattedThisSaleD8Profit = formatter.format(thisSaleD8Profit);
-				var formattedThisSaleD8Cost = formatter.format(thisSaleD8Profit);
+				var formattedThisSaleD8Cost = formatter.format(thisSaleD8Cost);
 				var formattedSalespersonCommission = formatter.format(salespersonCommission);
 
 				var embeds = [new EmbedBuilder()
@@ -177,7 +177,7 @@ module.exports.modalSubmit = async (interaction) => {
 					var formattedIndivTicketPrice = formatter.format(indivTicketPrice);
 					var formattedThisSalePrice = formatter.format(thisSalePrice);
 					var formattedThisSaleD8Profit = formatter.format(thisSaleD8Profit);
-					var formattedThisSaleD8Cost = formatter.format(thisSaleD8Profit);
+					var formattedThisSaleD8Cost = formatter.format(thisSaleD8Cost);
 					var formattedSalespersonCommission = formatter.format(salespersonCommission);
 
 					var embeds = [new EmbedBuilder()
