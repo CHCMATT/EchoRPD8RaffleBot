@@ -68,7 +68,7 @@ module.exports.modalSubmit = async (interaction) => {
 				var salespersonCommission = (numTickets * 1000);
 
 				await dbCmds.addSummValue("d8Profit", thisSaleD8Profit);
-				await dbCmds.addSummValue("d8Cost", thisSaleD8Profit);
+				await dbCmds.addSummValue("d8Cost", thisSaleD8Cost);
 
 				var formattedIndivTicketPrice = formatter.format(indivTicketPrice);
 				var formattedThisSalePrice = formatter.format(thisSalePrice);
