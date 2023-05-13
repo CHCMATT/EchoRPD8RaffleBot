@@ -1,5 +1,7 @@
 let dsBtn = require('./dsBtn');
 let dsModal = require('./dsModal');
+var dsStringSelectMenu = require('./dsStringSelectMenu.js');
+
 
 module.exports = (client) => {
 	client.on('interactionCreate', async interaction => {
@@ -12,6 +14,9 @@ module.exports = (client) => {
 			}
 			else if (interaction.isModalSubmit()) {
 				await dsModal.modalSubmit(interaction);
+			}
+			else if (interaction.isStringSelectMenu()) {
+				await dsStringSelectMenu.stringSelectMenuSubmit(interaction);
 			}
 			else {
 				return;
