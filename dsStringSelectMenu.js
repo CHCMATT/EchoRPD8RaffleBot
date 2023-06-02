@@ -79,7 +79,7 @@ module.exports.stringSelectMenuSubmit = async (interaction) => {
 							)
 							.setColor('FAD643');
 
-						await interaction.client.channels.cache.get(process.env.THE_UPSTAIRS_CHANNEL_ID).send({ embeds: [upstairsEmbed1, upstairsEmbed2] });
+						await interaction.client.channels.cache.get(process.env.CEO_COO_OFFICE_CHANNEL_ID).send({ embeds: [upstairsEmbed1, upstairsEmbed2] });
 
 						await dbCmds.resetSummValue("countTicketsSold");
 						await dbCmds.resetSummValue("countUniquePlayers");
