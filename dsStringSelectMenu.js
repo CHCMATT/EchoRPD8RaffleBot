@@ -15,6 +15,7 @@ module.exports.stringSelectMenuSubmit = async (interaction) => {
 		switch (selectStringMenuID) {
 			case 'endRaffleConfirmation':
 				if (interaction.values[0] == 'confirmEndRaffle') {
+					await interaction.deferReply({ ephemeral: true });
 					let ticketsSold = await dbCmds.readTicketSales();
 					let everyTicket = [];
 
@@ -102,12 +103,12 @@ module.exports.stringSelectMenuSubmit = async (interaction) => {
 
 						await commissionCmds.commissionReport(interaction.client);
 
-						await interaction.update({ content: `Successfully ended the raffle!`, components: [], ephemeral: true });
+						await interaction.editReply({ content: `Successfully ended the raffle!`, components: [], ephemeral: true });
 					} else {
-						await interaction.update({ content: `:exclamation: There are no tickets sold yet for this raffle!`, components: [], ephemeral: true });
+						await interaction.editReply({ content: `:exclamation: There are no tickets sold yet for this raffle!`, components: [], ephemeral: true });
 					}
 				} else if (interaction.values[0] == 'denyEndRaffle') {
-					await interaction.update({ content: `The raffle was not ended and will continue running!`, components: [], ephemeral: true });
+					await interaction.reply({ content: `The raffle was not ended and will continue running!`, components: [], ephemeral: true });
 				}
 				break;
 			default:
