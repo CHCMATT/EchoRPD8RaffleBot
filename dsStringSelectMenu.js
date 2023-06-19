@@ -63,7 +63,7 @@ module.exports.stringSelectMenuSubmit = async (interaction) => {
 								{ name: `Winner Name:`, value: `${winnerData.charName}`, inline: true },
 								{ name: `Citizen ID:`, value: `${winnerData.citizenId}`, inline: true },
 								{ name: `Phone Number:`, value: `${winnerData.phoneNum}`, inline: true },
-								{ name: `Amount of Tickets Purchase:`, value: `${winnerData.ticketsBought}` },
+								{ name: `Amount of Tickets Purchased:`, value: `${winnerData.ticketsBought}` },
 								{ name: `Raffle Completed By:`, value: `<@${interaction.user.id}>` },
 							)
 							.setColor('EDC531');
@@ -95,7 +95,7 @@ module.exports.stringSelectMenuSubmit = async (interaction) => {
 								{ name: `Winner Name:`, value: `${winnerData.charName}` },
 								{ name: `Citizen ID:`, value: `${winnerData.citizenId}`, inline: true },
 								{ name: `Phone Number:`, value: `${winnerData.phoneNum}`, inline: true },
-								{ name: `Amount of Tickets Purchase:`, value: `${winnerData.ticketsBought}` },
+								{ name: `Amount of Tickets Purchased:`, value: `${winnerData.ticketsBought}` },
 							)
 							.setColor('DBB42C')];
 
