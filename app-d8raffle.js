@@ -3,8 +3,9 @@ require("dotenv/config");
 let mongoose = require("mongoose");
 let startup = require('./startup.js');
 let { google } = require('googleapis');
+let message = require('./dsMessages.js');
 let interact = require('./dsInteractions.js');
-let { Client, Collection, GatewayIntentBits } = require('discord.js');
+let { Client, Collection, GatewayIntentBits, time } = require('discord.js');
 
 let client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers], partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 
@@ -23,14 +24,15 @@ client.once('ready', async () => {
 	console.log(`[${fileName}] Connected to Mongo!`);
 
 	// Google Sheets Authorization Stuff
-	let sheetsAuth = new google.auth.GoogleAuth({
+	let auth = new google.auth.GoogleAuth({
 		keyFile: "./sheets-creds.json",
 		scopes: "https://www.googleapis.com/auth/spreadsheets"
 	})
-	let sheetClient = sheetsAuth.getClient();
+	let sheetClient = auth.getClient();
 	let googleSheets = google.sheets({ version: "v4", auth: sheetClient });
 
-	client.sheetsAuth = sheetsAuth;
+	client.auth = auth;
+	client.sheetId = process.env.SPREADSHEET_ID;
 	client.googleSheets = googleSheets.spreadsheets;
 	console.log(`[${fileName}] Connected to Google Sheets!`);
 
@@ -69,8 +71,8 @@ client.once('ready', async () => {
 
 	await startup.startUp(client);
 
-	let now = Math.floor(new Date().getTime() / 1000.0);
-	let time = `<t:${now}:t>`;
+	let today = new Date();
+	let nowTime = time(today, 't');
 
-	await client.channels.cache.get(process.env.LOG_CHANNEL_ID).send(`:bangbang: The ${process.env.BOT_NAME} bot started up at ${time}.`)
+	await client.channels.cache.get(process.env.BOT_LOG_CHANNEL_ID).send(`:bangbang: The ${process.env.BOT_NAME} bot started up at ${nowTime}.`)
 });
