@@ -12,6 +12,10 @@ module.exports.commissionReport = async (client) => {
 	var today = `<t:${now}:d>`;
 
 	var peopleArray = await dbCmds.commissionRep();
+	peopleArray.sort((a, b) => {
+		return b.currentCommission - a.currentCommission;
+	});
+
 	var commissionDescList = '';
 
 	for (i = 0; i < peopleArray.length; i++) {
